@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2be28d4b1bf9e392a9ab4c623bf68632",
+    "content-hash": "e77f369501d10c0216cdb881fa1cd61b",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3307,12 +3307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/framework-bundle.git",
-                "reference": "f5b4937ed9eb0a25a3f84caae5f0b86a5c306916"
+                "reference": "416bc9c1110f1b441e0949cb5e0579cf971fa5f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/f5b4937ed9eb0a25a3f84caae5f0b86a5c306916",
-                "reference": "f5b4937ed9eb0a25a3f84caae5f0b86a5c306916",
+                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/416bc9c1110f1b441e0949cb5e0579cf971fa5f6",
+                "reference": "416bc9c1110f1b441e0949cb5e0579cf971fa5f6",
                 "shasum": ""
             },
             "require": {
@@ -3422,7 +3422,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "https://symfony.com",
-            "time": "2019-08-22T08:16:11+00:00"
+            "time": "2019-08-22T16:29:54+00:00"
         },
         {
             "name": "symfony/http-client",
@@ -3604,12 +3604,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "7c42d4a96b339b4aab4413af5a6d8a7ab54974cd"
+                "reference": "aef79fc15a6d8d2c0866dcd769164d133a0fad0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/7c42d4a96b339b4aab4413af5a6d8a7ab54974cd",
-                "reference": "7c42d4a96b339b4aab4413af5a6d8a7ab54974cd",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/aef79fc15a6d8d2c0866dcd769164d133a0fad0f",
+                "reference": "aef79fc15a6d8d2c0866dcd769164d133a0fad0f",
                 "shasum": ""
             },
             "require": {
@@ -3688,7 +3688,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-21T14:40:57+00:00"
+            "time": "2019-08-21T18:13:34+00:00"
         },
         {
             "name": "symfony/inflector",
@@ -6642,16 +6642,16 @@
         },
         {
             "name": "symfony/panther",
-            "version": "v0.5.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/panther.git",
-                "reference": "1e9a7b35fcaf9eb728558184e2319f4c4a60257a"
+                "reference": "2e68a80818c0b3d6d15af2890984d50ebf6ea07e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/panther/zipball/1e9a7b35fcaf9eb728558184e2319f4c4a60257a",
-                "reference": "1e9a7b35fcaf9eb728558184e2319f4c4a60257a",
+                "url": "https://api.github.com/repos/symfony/panther/zipball/2e68a80818c0b3d6d15af2890984d50ebf6ea07e",
+                "reference": "2e68a80818c0b3d6d15af2890984d50ebf6ea07e",
                 "shasum": ""
             },
             "require": {
@@ -6705,7 +6705,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2019-08-22T12:13:42+00:00"
+            "time": "2019-08-23T19:14:31+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -7054,6 +7054,12 @@
             "alias_normalized": "4.3.4.0",
             "version": "4.3.9999999.9999999-dev",
             "package": "symfony/http-kernel"
+        },
+        {
+            "alias": "0.5.1",
+            "alias_normalized": "0.5.1.0",
+            "version": "9999999-dev",
+            "package": "symfony/panther"
         }
     ],
     "minimum-stability": "stable",
@@ -7061,7 +7067,8 @@
         "symfony/cache": 20,
         "symfony/config": 20,
         "symfony/framework-bundle": 20,
-        "symfony/http-kernel": 20
+        "symfony/http-kernel": 20,
+        "symfony/panther": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
