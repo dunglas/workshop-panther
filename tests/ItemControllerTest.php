@@ -8,7 +8,7 @@ class ItemControllerTest extends WebTestCase
 {
     public function testCreateItem(): void
     {
-        $client = static::createPantherClient();
+        $client = static::createClient();
         // Load the index
         $client->request('GET', '/item/');
         $client->followRedirects();
