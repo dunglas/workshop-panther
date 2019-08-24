@@ -34,7 +34,7 @@
     "require-dev": {
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/panther": "^0.5.0",
+        "symfony/panther": "^0.5.1",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*"
