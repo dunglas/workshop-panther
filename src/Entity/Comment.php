@@ -39,6 +39,11 @@ class Comment
      */
     private $item;
 
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

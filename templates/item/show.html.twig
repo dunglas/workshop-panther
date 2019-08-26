@@ -1,5 +1,99 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {# Better use Symfony Webpack Encore to generate cacheable external JS files #}
+    <template id="hn-comments-template">
+        <h1>Comments</h1>
+
+        <div id="comments">Loading...</div>
+
+        <form id="post-comment">
+            <textarea name="body" placeholder="Your comment"></textarea>
+            <input name="author" placeholder="Your name"/>
+
+            <input type="submit" value="Post">
+        </form>
+    </template>
+
+    <template id="hn-comment-template">
+        <div class="comment">
+            <article><!-- body --></article>
+            <p><!-- author --></p>
+            <date><!-- publishedAt --></date>
+        </div>
+    </template>
+    <script>
+        class HNComments extends HTMLElement {
+            constructor() {
+                super();
+
+                this.itemID = this.getAttribute('item-id');
+
+                const rootNode = document.getElementById('hn-comments-template').content.cloneNode(true);
+                this.appendChild(rootNode);
+                this.comments = document.getElementById('comments');
+
+                this.commentTmpl = document.getElementById('hn-comment-template');
+
+                const form = document.getElementById('post-comment');
+                const button = form.querySelector('input[type=submit]');
+                const self = this;
+
+                // post a new comment
+                form.onsubmit = function (e) {
+                    e.preventDefault();
+                    button.disabled = true;
+
+                    fetch(`/api/comments`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/ld+json'},
+                        body: JSON.stringify({
+                            item: `/api/items/${self.itemID}`,
+                            author: this.author.value,
+                            body: this.body.value,
+                        })
+                    }).then(() => {
+                        // handle server-side errors, network failures etc...
+                        self.fetchAndDisplayComments(); // Refresh list
+
+                        form.reset();
+                        button.disabled = false;
+                    })
+                }
+            }
+
+            connectedCallback() {
+                // Called every time the custom element is inserted into the DOM.
+                this.fetchAndDisplayComments();
+            }
+
+            fetchAndDisplayComments() {
+                fetch(`/api/items/${this.itemID}/comments`)
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json['hydra:member'].length === 0) {
+                            this.comments.innerText = 'No comments';
+
+                            return;
+                        }
+
+                        this.comments.innerText = ''; // Reset
+                        json['hydra:member'].forEach(comment => {
+                            const commentNode = this.commentTmpl.content.cloneNode(true);
+                            commentNode.querySelector('article').innerText = comment.body;
+                            commentNode.querySelector('p').innerText = comment.author;
+                            commentNode.querySelector('date').innerText = comment.publishedAt;
+
+                            this.comments.appendChild(commentNode);
+                        })
+                    });
+            }
+        }
+
+        customElements.define('hn-comments', HNComments);
+    </script>
+{% endblock %}
+
 {% block title %}Item{% endblock %}
 
 {% block body %}
@@ -7,18 +101,18 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ item.id }}</td>
-            </tr>
-            <tr>
-                <th>StoryLink</th>
-                <td>{{ item.storyLink }}</td>
-            </tr>
-            <tr>
-                <th>PublishedAt</th>
-                <td>{{ item.publishedAt ? item.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ item.id }}</td>
+        </tr>
+        <tr>
+            <th>StoryLink</th>
+            <td>{{ item.storyLink }}</td>
+        </tr>
+        <tr>
+            <th>PublishedAt</th>
+            <td>{{ item.publishedAt ? item.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 
@@ -29,4 +123,6 @@
     <a href="{{ path('item_edit', {'id': item.id}) }}">edit</a>
 
     {{ include('item/_delete_form.html.twig') }}
+
+    <hn-comments item-id="{{ item.id|escape('html_attr') }}"></hn-comments>
 {% endblock %}

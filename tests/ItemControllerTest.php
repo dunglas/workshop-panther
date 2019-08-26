@@ -31,4 +31,23 @@ class ItemControllerTest extends PantherTestCase
 
         $this->assertSelectorTextContains('table', 'https://masterclass.les-tilleuls.coop');
     }
+
+    public function testComment(): void
+    {
+        $client = static::createPantherClient();
+        $client->request('GET', '/item/1'); // 🔍🙀
+
+        // Panther's magic: wait for the form to appear!
+        $client->waitFor('#post-comment');
+
+        $client->submitForm('Post', [
+            'body' => 'Very interesting!',
+            'author' => 'bob',
+        ]);
+
+        // Wait for the post to be processed server-side, fetched and displayed
+        $client->waitFor('#post-comment input:not([disabled])');
+
+        $this->assertSelectorTextContains('#comments', 'Very interesting!');
+    }
 }
