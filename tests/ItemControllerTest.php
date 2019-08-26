@@ -2,10 +2,13 @@
 
 namespace App\Tests;
 
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use Symfony\Component\Panther\PantherTestCase;
 
 class ItemControllerTest extends PantherTestCase
 {
+    use ReloadDatabaseTrait;
+
     public function testCreateItem(): void
     {
         $client = static::createPantherClient();
