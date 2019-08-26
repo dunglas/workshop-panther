@@ -19,7 +19,7 @@
         <div class="comment">
             <article><!-- body --></article>
             <p><!-- author --></p>
-            <date><!-- publishedAt --></date>
+            <time><!-- publishedAt --></time>
         </div>
     </template>
     <script>
@@ -82,7 +82,7 @@
                             const commentNode = this.commentTmpl.content.cloneNode(true);
                             commentNode.querySelector('article').innerText = comment.body;
                             commentNode.querySelector('p').innerText = comment.author;
-                            commentNode.querySelector('date').innerText = comment.publishedAt;
+                            commentNode.querySelector('time').innerText = comment.publishedAt;
 
                             this.comments.appendChild(commentNode);
                         })

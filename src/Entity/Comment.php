@@ -6,7 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(paginationEnabled=false)
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
 class Comment
