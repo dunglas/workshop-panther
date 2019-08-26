@@ -2,13 +2,13 @@
 
 namespace App\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
-class ItemControllerTest extends WebTestCase
+class ItemControllerTest extends PantherTestCase
 {
     public function testCreateItem(): void
     {
-        $client = static::createClient();
+        $client = static::createPantherClient();
         // Load the index
         $client->request('GET', '/item/');
         $client->followRedirects();
