@@ -46,7 +46,7 @@ class ItemControllerTest extends PantherTestCase
         ]);
 
         // Wait for the post to be processed server-side, fetched and displayed
-        $client->waitFor('#post-comment input:not([disabled])');
+        $client->waitFor('#status.displayed');
 
         $this->assertSelectorTextContains('#comments', 'Very interesting!');
     }

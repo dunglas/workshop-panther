@@ -8,6 +8,7 @@
         <div id="comments">Loading...</div>
 
         <form id="post-comment">
+            <div id="status" class="hidden">Comment published!</div>
             <textarea name="body" placeholder="Your comment"></textarea>
             <input name="author" placeholder="Your name"/>
 
@@ -16,6 +17,11 @@
     </template>
 
     <template id="hn-comment-template">
+        <style>
+        .hidden {
+            display: none;
+        }
+        </style>
         <div class="comment">
             <article><!-- body --></article>
             <p><!-- author --></p>
@@ -36,13 +42,12 @@
                 this.commentTmpl = document.getElementById('hn-comment-template');
 
                 const form = document.getElementById('post-comment');
-                const button = form.querySelector('input[type=submit]');
+                const status = document.getElementById('status');
                 const self = this;
 
                 // post a new comment
                 form.onsubmit = function (e) {
                     e.preventDefault();
-                    button.disabled = true;
 
                     fetch(`/api/comments`, {
                         method: 'POST',
@@ -52,12 +57,12 @@
                             author: this.author.value,
                             body: this.body.value,
                         })
-                    }).then(() => {
-                        // handle server-side errors, network failures etc...
-                        self.fetchAndDisplayComments(); // Refresh list
-
+                    })
+                    // handle server-side errors, network failures etc...
+                    .then(() => self.fetchAndDisplayComments()) // Refresh list
+                    .then(() => {
+                        status.classList.replace('hidden', 'displayed');
                         form.reset();
-                        button.disabled = false;
                     })
                 }
             }
@@ -68,7 +73,7 @@
             }
 
             fetchAndDisplayComments() {
-                fetch(`/api/items/${this.itemID}/comments`)
+                return fetch(`/api/items/${this.itemID}/comments`)
                     .then(response => response.json())
                     .then(json => {
                         if (json['hydra:member'].length === 0) {
