@@ -39,7 +39,11 @@ class ItemControllerTest extends PantherTestCase
     public function testComment(): void
     {
         $client = static::createPantherClient();
-        $client->request('GET', '/item/1'); // 🔍🙀
+        $client->request('GET', '/item/1');
+
+        // Another isolated browser
+        $client2 = static::createAdditionalPantherClient();
+        $client2->request('GET', '/item/1');
 
         // Panther's magic: wait for the form to appear!
         $client->waitFor('#post-comment');
@@ -50,8 +54,11 @@ class ItemControllerTest extends PantherTestCase
         ]);
 
         // Wait for the post to be processed server-side, fetched and displayed
-        $client->waitFor('#status.displayed');
+        $client->waitFor('.mercure');
 
-        $this->assertSelectorTextContains('#comments', 'Very interesting!');
+        $this->assertSelectorTextContains('.mercure', 'Very interesting!');
+
+        $crawler = $client2->waitFor('.mercure');
+        $this->assertStringContainsString('Very interesting!', $crawler->filter('.mercure')->text());
     }
 }

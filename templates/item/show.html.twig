@@ -59,7 +59,7 @@
                         })
                     })
                     // handle server-side errors, network failures etc...
-                    .then(() => self.fetchAndDisplayComments()) // Refresh list
+                    //.then(() => self.fetchAndDisplayComments()) // Refresh list
                     .then(() => {
                         status.classList.replace('hidden', 'displayed');
                         form.reset();
@@ -96,6 +96,30 @@
         }
 
         customElements.define('hn-comments', HNComments);
+    </script>
+
+    <script>
+        const commentTmpl = document.getElementById('hn-comment-template');
+
+        const hubURL = new URL('http://localhost:3000/hub');
+        hubURL.searchParams.append('topic', `${window.origin}/api/comments/{id}`);
+
+        const es = new EventSource(hubURL);
+        es.onmessage = function (e) {
+            const comment = JSON.parse(e.data);
+            if (comment.item !== '/api/items/{{ item.id|escape('js') }}') {
+                // Comment of another post
+                return;
+            }
+
+            const commentNode = commentTmpl.content.cloneNode(true);
+            commentNode.querySelector('.comment').classList.add('mercure');
+            commentNode.querySelector('article').innerText = comment.body;
+            commentNode.querySelector('p').innerText = comment.author;
+            commentNode.querySelector('time').innerText = comment.publishedAt;
+
+            document.getElementById('comments').appendChild(commentNode);
+        }
     </script>
 {% endblock %}
 
