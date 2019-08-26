@@ -32,6 +32,7 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.5",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/panther": "^0.5.1",

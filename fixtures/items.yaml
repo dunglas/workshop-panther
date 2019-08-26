@@ -1,0 +1,11 @@
+App\Entity\Item:
+  item_{0..10}:
+    storyLink: '<url()>'
+    publishedAt: '<dateTime()>'
+
+App\Entity\Comment:
+  comment_{0..200}:
+    body: '<paragraph()>'
+    author: '<name()>'
+    publishedAt: '<dateTime()>'
+    item: '@item_*'
